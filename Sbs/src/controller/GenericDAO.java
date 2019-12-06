@@ -29,7 +29,7 @@ public abstract class GenericDAO {
         }
     }
 
-    protected abstract Object buildObject(ResultSet rs);
+    protected abstract Object buildObject(ResultSet rs) throws SQLException;
 
     protected List<Object> retrieveListOfObjects(String query)
             throws SQLException {
@@ -66,10 +66,11 @@ public abstract class GenericDAO {
         return retrieveById(id, tableName);
     }
 
-    private void delete(int id, String tableName) throws SQLException {
+    protected void delete(int id, String tableName) throws SQLException {
         PreparedStatement stmt;
         stmt = con.getConnection().prepareStatement("DELETE FROM " + tableName + " WHERE id = ?");
         stmt.setInt(1, id);
         con.executeUpdate(stmt);
     }
+
 }
